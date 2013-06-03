@@ -9,11 +9,6 @@ class TestSellers < Minitest::Test
     @reference = Amatch::Sellers.new('pattern')
   end
 
-  def test_hello
-    assert defined?( @empty.hello), "Hello is not defined"
-    assert_equal "Hello", @empty.hello(), "Incorrect hello"
-  end
-
   def test_pattern
     @empty.pattern = "pattern";
     assert_equal "pattern", @empty.pattern
@@ -28,6 +23,19 @@ class TestSellers < Minitest::Test
     @empty.pattern = "pattern";
     result = @empty.search( "aaapatternbbbb");
     assert_equal result, 0.0, "Should be an exact match"
+  end
+
+  def test_apply
+    @empty.pattern = "pattern";
+    result = @empty.apply( "This is a string");
+    # assert_equal result, 0.0
+
+    result = @empty.apply( 47 );
+    # assert_equal result, 0.0
+
+    result = @empty.apply( ["thing1", "thing2", "thing3"] );
+    puts result
+    # assert_equal result, 0.0
   end
 
 end

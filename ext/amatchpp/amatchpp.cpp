@@ -1,7 +1,9 @@
 #include "rice/Module.hpp"
 #include "rice/Class.hpp"
+#include "rice/Object.hpp"
 #include "rice/Data_Type.hpp"
 #include "rice/Constructor.hpp"
+#include "rice/Array.hpp"
 
 #include "Sellers.h"
 
@@ -17,8 +19,10 @@ void Init_amatchpp()
 
   rb_cSellers = define_class_under<Amatchpp::Sellers>(rb_mAmatchpp, "Sellers");
   rb_cSellers.define_constructor(Constructor<Amatchpp::Sellers>());
-  rb_cSellers.define_method("hello", &Amatchpp::Sellers::hello);
+  rb_cSellers.define_method("reset_weights", &Amatchpp::Sellers::reset_weights);
   rb_cSellers.define_method("search", &Amatchpp::Sellers::search);
+
+  rb_cSellers.define_method("apply", &Amatchpp::Sellers::fake_apply);
 
   RUBY_DECL_RW_ATTR( Amatchpp::Sellers, rb_cSellers, std::string, pattern)
 

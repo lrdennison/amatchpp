@@ -1,18 +1,10 @@
-#define CPP_DECL_RW_ATTR( type, name)		\
-  type name;					\
-  type get_##name() { return name; }		\
-  void set_##name(type vvv) {name = vvv; }
-
-
-#define RUBY_DECL_RW_ATTR( klass, prototype, type, name)	\
-  prototype.define_method( #name, &klass::get_##name);		\
-  prototype.define_method( #name "=", &klass::set_##name);
-
+#include <iostream>
+#include "General.h"
 
 namespace Amatchpp
 {
 
-  class Sellers {
+  class Sellers : public General<Sellers> {
   public:
 
     CPP_DECL_RW_ATTR( std::string, pattern)
@@ -35,18 +27,31 @@ namespace Amatchpp
 
     Sellers()
     {
+      reset_weights();
+    }
+
+
+    Rice::Object fake_apply(Rice::Object arg) {
+      return apply( this, &Sellers::search_internal, arg);
+    }
+
+    Rice::Object search(Rice::Object arg) {
+      return apply( this, &Sellers::search_internal, arg);
+    }
+
+    Rice::Object match(Rice::Object arg) {
+      return apply( this, &Sellers::match_internal, arg);
+    }
+
+    void reset_weights()
+    {
       substitution = 1.0;
       deletion     = 1.0;
       insertion    = 1.0;
     }
 
-    std::string hello()
-    {
-      return "Hello";
-    }
 
-
-    void setup(std::string &text)
+    void setup(const std::string &text)
     {
       a_ptr = pattern.c_str();
       a_len = pattern.length();
@@ -56,6 +61,14 @@ namespace Amatchpp
       for( int ix=0; ix<2; ++ix) {
 	v[ix] = ALLOC_N(double, b_len + 1);
 	MEMZERO(v[ix], double, b_len + 1);
+      }
+    }
+
+    void setup_v_deletion()
+    {
+      for (int i = 0; i <= b_len; i++) {
+        v[0][i] = i * deletion;
+        v[1][i] = i * deletion;
       }
     }
 
@@ -102,7 +115,22 @@ namespace Amatchpp
     }
 
 
-    double search(std::string &text)
+
+
+    double match_internal(const std::string &text)
+    {
+      setup( text);
+      setup_v_deletion();
+
+      compute();
+
+      double result = v[p][b_len];
+      teardown();
+      return( result);
+    }
+
+
+    double search_internal(const std::string &text)
     {
       setup( text);
       compute();

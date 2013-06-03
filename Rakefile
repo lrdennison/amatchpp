@@ -4,15 +4,22 @@ begin
   # require 'rake/gempackagetask'
   require 'rubygems/package_task'
   require 'rake/extensiontask'
+  require 'rake/clean'
+  require 'rake/testtask'
+  require 'rbconfig'
+
 # rescue LoadError
 end
 
-require 'rbconfig'
 include RbConfig
-
-require 'rake/clean'
 CLEAN.include 'coverage', 'doc'
-require 'rake/testtask'
+
+############################################################
+# Some Rakefile debugging and checking
+############################################################
+
+
+puts "**********"
 
 if( defined?(Gem)) then
     puts "Gem is defined"
@@ -28,11 +35,47 @@ end
 
 puts "**********"
 
-MAKE        = ENV['MAKE'] || %w[gmake make].find { |c| system(c, '-v') }
+
+
+NAME    = 'amatchpp'
+
 PKG_NAME    = 'amatchpp'
 PKG_VERSION = File.read('VERSION').chomp
 PKG_FILES   = FileList["**/*"].exclude(/^(pkg|coverage|doc|tmp)/)
 PKG_DOC_FILES = [ "ext/amatch.c" ].concat(Dir['lib/**/*.rb']) << 'README'
+
+MAKE        = ENV['MAKE'] || %w[gmake make].find { |c| system(c, '-v') }
+
+
+############################################################
+# Compilation
+############################################################
+
+
+# rule to build the extension: this says
+# that the extension should be rebuilt
+# after any change to the files in ext
+
+file "lib/#{NAME}/#{NAME}.so" =>
+  Dir.glob("ext/#{NAME}/*{.rb,.c,.cpp,*.h}") do
+  Dir.chdir("ext/#{NAME}") do
+    # this does essentially the same thing
+    # as what RubyGems does
+    ruby "extconf.rb"
+    sh "make clean"
+    sh "make"
+  end
+  cp "ext/#{NAME}/#{NAME}.so", "lib/#{NAME}"
+end
+
+
+desc "Compiling library"
+task :compile_ext => "lib/#{NAME}/#{NAME}.so" do
+end
+
+############################################################
+# Unit testing
+############################################################
 
 desc "Run unit tests"
 task :test => :compile_ext do
@@ -43,18 +86,16 @@ task :test => :compile_ext do
   end
 
   Rake::TestTask.new do |t|
-    t.libs=["ext/amatchpp"]
+    t.libs << 'lib/amatchpp'
     t.pattern = "tests/test_*.rb"
   end
 end
 
-desc "Compiling library"
-task :compile_ext do
-  cd 'ext/amatchpp'  do
-    ruby %{extconf.rb}
-    sh MAKE
-  end
-end
+
+
+############################################################
+# Installation
+############################################################
 
 desc "Installing library"
 task :install => :test do
@@ -64,13 +105,27 @@ task :install => :test do
   install(src, dst, :verbose => true)
 end
 
+
+
+############################################################
+# Clean
+############################################################
+
 desc "Removing generated files"
 task :clean do
   cd 'ext/amatchpp' do
     ruby 'extconf.rb'
     sh "#{MAKE} distclean" if File.exist?('Makefile')
   end
+
+  cd 'lib/amatchpp' do
+    sh "rm -f *.so"
+  end
 end
+
+############################################################
+# Documentation
+############################################################
 
 desc "Build the documentation"
 task :doc do
@@ -144,7 +199,7 @@ task :version do
   File.open(File.join('lib', 'amatchpp', 'version.rb'), 'w') do |v|
     v.puts <<EOT
 module Amatchpp
-  # Amatch version
+  # Amatchpp version
   VERSION         = '#{PKG_VERSION}'
   VERSION_ARRAY   = VERSION.split(/\\./).map { |x| x.to_i } # :nodoc:
   VERSION_MAJOR   = VERSION_ARRAY[0] # :nodoc:
