@@ -8,7 +8,7 @@ Several algorithms can be used to do this, and it's also possible to compute a
 similarity metric number between 0.0 and 1.0 for two given strings.
 EOF
 
-      s.files = ["Gemfile", "Gemfile.lock", "Makefile", "README.md", "Rakefile", "VERSION", "amatchpp.gemspec", "ext", "ext/Sellers.cpp", "ext/Sellers.h", "ext/amatchpp.cpp", "ext/extconf.rb", "lib", "lib/amatchpp", "lib/amatchpp/version.rb", "tests", "tests/me_first.rb", "tests/test_sellers.rb"]
+      s.files = ["Gemfile", "Gemfile.lock", "Makefile", "README.md", "Rakefile", "VERSION", "amatchpp.gemspec", "ext", "ext/amatchpp", "ext/amatchpp/Makefile", "ext/amatchpp/Sellers.cpp", "ext/amatchpp/Sellers.h", "ext/amatchpp/Sellers.o", "ext/amatchpp/amatchpp.cpp", "ext/amatchpp/amatchpp.o", "ext/amatchpp/amatchpp.so", "ext/amatchpp/extconf.rb", "lib", "lib/amatchpp", "lib/amatchpp/version.rb", "tests", "tests/me_first.rb", "tests/test_sellers.rb"]
 
       s.extensions << "ext/extconf.rb"
 

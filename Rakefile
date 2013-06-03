@@ -43,14 +43,14 @@ task :test => :compile_ext do
   end
 
   Rake::TestTask.new do |t|
-    t.libs=["ext"]
+    t.libs=["ext/amatchpp"]
     t.pattern = "tests/test_*.rb"
   end
 end
 
 desc "Compiling library"
 task :compile_ext do
-  cd 'ext'  do
+  cd 'ext/amatchpp'  do
     ruby %{extconf.rb}
     sh MAKE
   end
@@ -66,7 +66,7 @@ end
 
 desc "Removing generated files"
 task :clean do
-  cd 'ext' do
+  cd 'ext/amatchpp' do
     ruby 'extconf.rb'
     sh "#{MAKE} distclean" if File.exist?('Makefile')
   end
