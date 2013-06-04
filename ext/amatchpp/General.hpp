@@ -10,7 +10,7 @@
 #include "rice/Constructor.hpp"
 #include "rice/Array.hpp"
 
-#include "utils.h"
+#include "utils.hpp"
 
 namespace Amatchpp
 {
@@ -18,26 +18,40 @@ namespace Amatchpp
   public:
     CPP_DECL_RW_ATTR( std::string, pattern)
 
-    General();
+    // The two strings. A is corresponds to the pattern, b to the larger text
+    const char *a_ptr, *b_ptr;
+    int a_len, b_len;
+
+    General(const std::string pat);
+
+    void setup(const std::string &text)
+    {
+      a_ptr = pattern.c_str();
+      a_len = pattern.length();
+      b_ptr = text.c_str();
+      b_len = text.length();
+    }
+
+
 
     template<class T>
     Rice::Object apply(T *self, double (T::*mf)(const std::string &text), Rice::Object arg)
     {
-      std::cout << "In the apply function" << std::endl;
+      // std::cout << "In the apply function" << std::endl;
 
       double result =  0.0;
 
       int arg_type = arg.rb_type();
 
       if( arg_type == T_STRING) {
-	std::cout << "This is a string" << std::endl;
+	// std::cout << "This is a string" << std::endl;
 	result = (self->*mf)( from_ruby<std::string>( arg));
 	return to_ruby( result);
       }
 
 
       if( arg_type == T_ARRAY) {
-	std::cout << "This is an array" << std::endl;
+	// std::cout << "This is an array" << std::endl;
 
 	Rice::Array a( arg);
 

@@ -57,7 +57,7 @@ MAKE        = ENV['MAKE'] || %w[gmake make].find { |c| system(c, '-v') }
 # after any change to the files in ext
 
 file "lib/#{NAME}/#{NAME}.so" =>
-  Dir.glob("ext/#{NAME}/*{.rb,.c,.cpp,*.h}") do
+  Dir.glob("ext/#{NAME}/*{.rb,.c,.cpp,*.h,*.hpp}") do
   Dir.chdir("ext/#{NAME}") do
     # this does essentially the same thing
     # as what RubyGems does
@@ -86,7 +86,7 @@ task :test => :compile_ext do
   end
 
   Rake::TestTask.new do |t|
-    t.libs << 'lib/amatchpp'
+    t.libs << 'lib/amatchpp' << 'tests'
     t.pattern = "tests/test_*.rb"
   end
 end

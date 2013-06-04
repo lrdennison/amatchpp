@@ -175,25 +175,6 @@ DEF_ALLOCATOR(General)
 DEF_PATTERN_ACCESSOR(General)
 DEF_ITERATE_STRINGS(General)
 
-typedef struct SellersStruct {
-    char        *pattern;
-    int         pattern_len;
-    double      substitution;
-    double      deletion;
-    double      insertion;
-} Sellers;
-
-DEF_ALLOCATOR(Sellers)
-DEF_PATTERN_ACCESSOR(Sellers)
-DEF_ITERATE_STRINGS(Sellers)
-
-static void Sellers_reset_weights(Sellers *self)
-{
-    self->substitution = 1.0;
-    self->deletion     = 1.0;
-    self->insertion    = 1.0;
-}
-
 typedef struct PairDistanceStruct {
     char        *pattern;
     int         pattern_len;

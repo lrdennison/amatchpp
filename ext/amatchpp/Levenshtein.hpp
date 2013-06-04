@@ -1,15 +1,15 @@
-#ifndef __SELLERS_H__
-#define __SELLERS_H__
+#ifndef __LEVENSHTEIN_H__
+#define __LEVENSHTEIN_H__
 
 #include "DynProg.hpp"
 
 namespace Amatchpp
 {
 
-  class Sellers : public DynProg {
+  class Levenshtein : public DynProg {
   public:
 
-    Sellers(const std::string pat);
+    Levenshtein(const std::string pat);
 
     Rice::Object match(Rice::Object arg);
     Rice::Object similar(Rice::Object arg);
@@ -25,6 +25,5 @@ namespace Amatchpp
   };
 
 }
-
 
 #endif

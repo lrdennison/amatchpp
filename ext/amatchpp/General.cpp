@@ -1,8 +1,10 @@
-#include "General.h"
+#include "General.hpp"
 
 namespace Amatchpp
 {
-  General::General() {
+  General::General(const std::string pat)
+  {
+    pattern = pat;
   }
 
 }

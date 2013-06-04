@@ -1,32 +1,37 @@
 #include <algorithm> 
 #include <iostream>
-#include "Sellers.hpp"
+#include "Levenshtein.hpp"
 
 namespace Amatchpp
 {
 
-  Sellers::Sellers(const std::string pat) : DynProg( pat)
+  Levenshtein::Levenshtein(const std::string pat) : DynProg( pat)
   {
   }
 
-  Rice::Object Sellers::search(Rice::Object arg) {
-    return apply<Sellers>( this, &Sellers::_search, arg);
+  Rice::Object Levenshtein::search(Rice::Object arg) {
+    return apply<Levenshtein>( this, &Levenshtein::_search, arg);
   }
 
-  Rice::Object Sellers::match(Rice::Object arg) {
-    return apply<Sellers>( this, &Sellers::_match, arg);
+  Rice::Object Levenshtein::match(Rice::Object arg) {
+    return apply<Levenshtein>( this, &Levenshtein::_match, arg);
   }
 
-  Rice::Object Sellers::similar(Rice::Object arg) {
-    return apply<Sellers>( this, &Sellers::_similar, arg);
+  Rice::Object Levenshtein::similar(Rice::Object arg) {
+    return apply<Levenshtein>( this, &Levenshtein::_similar, arg);
   }
 
 
 
-  void Sellers::compute()
+  // TODO Levenshtein appears to be the same as Sellers with all weights
+  // set to one.  Verify that and then move compute to DynProg
+
+  void Levenshtein::compute()
   {
     int i, j;
     double weight;
+    
+    reset_weights();
 
     for (i = 1, c = 0, p = 1; i <= a_len; i++) {				
       c = i % 2;                      /* current row */                   
@@ -52,7 +57,7 @@ namespace Amatchpp
 
 
 
-  double Sellers::_match(const std::string &text)
+  double Levenshtein::_match(const std::string &text)
   {
     setup( text);
     setup_v_deletion();
@@ -65,7 +70,7 @@ namespace Amatchpp
   }
 
 
-  double Sellers::_similar(const std::string &text)
+  double Levenshtein::_similar(const std::string &text)
   {
     setup( text);
     double result = 0.0;
@@ -93,7 +98,7 @@ namespace Amatchpp
   }
 
 
-  double Sellers::_search(const std::string &text)
+  double Levenshtein::_search(const std::string &text)
   {
     setup( text);
     compute();
