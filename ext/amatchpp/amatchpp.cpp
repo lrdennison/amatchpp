@@ -11,6 +11,8 @@
 #include "Hamming.hpp"
 #include "LongestSubsequence.hpp"
 #include "LongestSubstring.hpp"
+#include "Jaro.hpp"
+#include "JaroWinkler.hpp"
 
 using namespace Rice;
 
@@ -23,11 +25,10 @@ Data_Type<Amatchpp::Levenshtein> rb_cLevenshtein;
 Data_Type<Amatchpp::Hamming> rb_cHamming;
 Data_Type<Amatchpp::LongestSubsequence> rb_cLongestSubsequence;
 Data_Type<Amatchpp::LongestSubstring> rb_cLongestSubstring;
-
+Data_Type<Amatchpp::Jaro> rb_cJaro;
+Data_Type<Amatchpp::JaroWinkler> rb_cJaroWinkler;
 
   // rb_cPairDistance,
-  // rb_cJaro,
-  // rb_cJaroWinkler;
 
 
 extern "C"
@@ -85,5 +86,19 @@ void Init_amatchpp()
   rb_cLongestSubstring.define_method("match", &Amatchpp::LongestSubstring::match);
   rb_cLongestSubstring.define_method("similar", &Amatchpp::LongestSubstring::similar);
 
+
+
+  rb_cJaro = define_class_under<Amatchpp::Jaro, Amatchpp::General>(rb_mAmatchpp, "Jaro");
+  rb_cJaro.define_constructor(Constructor<Amatchpp::Jaro, std::string>() );
+  RUBY_DECL_RW_ATTR( Amatchpp::Jaro, rb_cJaro, bool, ignore_case);
+
+  rb_cJaro.define_method("match", &Amatchpp::Jaro::match);
+
+
+  rb_cJaroWinkler = define_class_under<Amatchpp::JaroWinkler, Amatchpp::Jaro>(rb_mAmatchpp, "JaroWinkler");
+  rb_cJaroWinkler.define_constructor(Constructor<Amatchpp::JaroWinkler, std::string>() );
+  RUBY_DECL_RW_ATTR( Amatchpp::JaroWinkler, rb_cJaroWinkler, double, scaling_factor);
+
+  rb_cJaroWinkler.define_method("match", &Amatchpp::JaroWinkler::match);
 
 }

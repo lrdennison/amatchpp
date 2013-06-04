@@ -24,6 +24,8 @@ namespace Amatchpp
 
     General(const std::string pat);
 
+    virtual ~General() {}
+
     void setup(const std::string &text)
     {
       a_ptr = pattern.c_str();
