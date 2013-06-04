@@ -1,6 +1,8 @@
 #ifndef __GENERAL_H__
 #define __GENERAL_H__
 
+#include <iostream>
+
 #include "rice/Module.hpp"
 #include "rice/Class.hpp"
 #include "rice/Object.hpp"
@@ -12,14 +14,14 @@
 
 namespace Amatchpp
 {
-  template<class T> class General {
+  class General {
   public:
-    typedef double (T::*member_func)(const std::string &text);
+    CPP_DECL_RW_ATTR( std::string, pattern)
 
-    General() {
-    }
+    General();
 
-    Rice::Object apply(T *self, member_func mf, Rice::Object arg)
+    template<class T>
+    Rice::Object apply(T *self, double (T::*mf)(const std::string &text), Rice::Object arg)
     {
       std::cout << "In the apply function" << std::endl;
 
