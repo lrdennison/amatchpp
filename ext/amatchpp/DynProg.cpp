@@ -39,17 +39,13 @@ namespace Amatchpp
 
   void DynProg::teardown()
   {
-    a_ptr = 0;
-    a_len = 0;
-    b_ptr = 0;
-    b_len = 0;
-  
     for( int ix=0; ix<2; ++ix) {
       if( v[ix]) {
 	free(v[ix]);
 	v[ix] = 0;
       }
     }
+    General::teardown();
   }
 
 

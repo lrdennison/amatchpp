@@ -18,7 +18,7 @@ namespace Amatchpp
   public:
     CPP_DECL_RW_ATTR( std::string, pattern)
 
-    // The two strings. A is corresponds to the pattern, b to the larger text
+    // The two strings. A is corresponds to the pattern, B to the larger text
     const char *a_ptr, *b_ptr;
     int a_len, b_len;
 
@@ -32,6 +32,26 @@ namespace Amatchpp
       b_len = text.length();
     }
 
+    void teardown() {
+      a_ptr = 0;
+      a_len = 0;
+      b_ptr = 0;
+      b_len = 0;
+    }
+
+    void order_by_length()
+    {
+      if( a_len > b_len) {
+	int t;
+	t = a_len;
+	a_len = b_len;
+	b_len = t;
+	const char *p;
+	p = a_ptr;
+	a_ptr = b_ptr;
+	b_ptr = p;
+      }
+    }
 
 
     template<class T>
