@@ -101,4 +101,37 @@ class TestSellers < TestLevenshtein
   end
 
 
+  def test_search
+    puts
+    assert_in_delta 1, @simple.search('bbbtstccc'), @d
+    assert_equal 3, @simple.start_pos
+    assert_equal 6, @simple.end_pos
+    puts @simple.edit_cmd
+
+    assert_in_delta 1, @simple.search('bbbtedstccc'), @d
+    assert_equal 3, @simple.start_pos
+    assert_equal 8, @simple.end_pos
+    puts @simple.edit_cmd
+
+    assert_in_delta 1, @simple.search('bbbbbtastccc'), @d
+    assert_equal 5, @simple.start_pos
+    assert_equal 9, @simple.end_pos
+    puts @simple.edit_cmd
+
+    assert_in_delta 1, @simple.search('bbbtstccc'), @d
+    assert_equal 3, @simple.start_pos
+    assert_equal 6, @simple.end_pos
+    puts @simple.edit_cmd
+
+    assert_in_delta 1, @simple.search('bbbtedstccc'), @d
+    assert_equal 3, @simple.start_pos
+    assert_equal 8, @simple.end_pos
+    puts @simple.edit_cmd
+
+    assert_in_delta 1, @simple.search('bbbtastccc'), @d
+    assert_equal 3, @simple.start_pos
+    assert_equal 7, @simple.end_pos
+    puts @simple.edit_cmd
+  end
+
 end

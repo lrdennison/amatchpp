@@ -14,8 +14,20 @@
 
 namespace Amatchpp
 {
+  /* 
+   * Document-class: Amatchpp::General
+   *
+   * The base class for all approximate matchers.
+   */
+
   class General {
   public:
+
+    /*
+     * Document-attr: pattern
+     *
+     * The pattern string used in calculations
+     */
     CPP_DECL_RW_ATTR( std::string, pattern)
 
     // The two strings. A is corresponds to the pattern, B to the larger text

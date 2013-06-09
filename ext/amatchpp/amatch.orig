@@ -369,7 +369,7 @@ static VALUE JaroWinkler_match(JaroWinkler *amatch, VALUE string)
  */
 
  /* 
-  * Document-class: Amatch::Levenshtein
+  * Document-class: Amatchpp::Levenshtein
   *
   * The Levenshtein edit distance is defined as the minimal costs involved to
   * transform one string into another by using three elementary operations:
@@ -388,7 +388,7 @@ DEF_RB_FREE(Levenshtein, General)
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::Levenshtein instance from <code>pattern</code>.
+ * Creates a new Amatchpp::Levenshtein instance from <code>pattern</code>.
  */
 static VALUE rb_Levenshtein_initialize(VALUE self, VALUE pattern)
 {
@@ -402,7 +402,7 @@ DEF_CONSTRUCTOR(Levenshtein, General)
 /*
  * call-seq: match(strings) -> results
  * 
- * Uses this Amatch::Levenshtein instance to match Amatch::Levenshtein#pattern
+ * Uses this Amatchpp::Levenshtein instance to match Amatchpp::Levenshtein#pattern
  * against <code>strings</code>. It returns the number operations, the Sellers
  * distance. <code>strings</code> has to be either a String or an Array of
  * Strings. The returned <code>results</code> are either a Float or an Array of
@@ -417,7 +417,7 @@ static VALUE rb_Levenshtein_match(VALUE self, VALUE strings)
 /*
  * call-seq: similar(strings) -> results
  * 
- * Uses this Amatch::Levenshtein instance to match  Amatch::Levenshtein#pattern
+ * Uses this Amatchpp::Levenshtein instance to match  Amatchpp::Levenshtein#pattern
  * against <code>strings</code>, and compute a Levenshtein distance metric
  * number between 0.0 for very unsimilar strings and 1.0 for an exact match.
  * <code>strings</code> has to be either a String or an Array of Strings. The
@@ -433,7 +433,7 @@ static VALUE rb_Levenshtein_similar(VALUE self, VALUE strings)
 /*
  * call-seq: levenshtein_similar(strings) -> results
  * 
- * If called on a String, this string is used as a Amatch::Levenshtein#pattern
+ * If called on a String, this string is used as a Amatchpp::Levenshtein#pattern
  * to match against <code>strings</code>. It returns a Levenshtein distance
  * metric number between 0.0 for very unsimilar strings and 1.0 for an exact
  * match. <code>strings</code> has to be either a String or an Array of
@@ -449,7 +449,7 @@ static VALUE rb_str_levenshtein_similar(VALUE self, VALUE strings)
 /*
  * call-seq: search(strings) -> results
  * 
- * searches Amatch::Levenshtein#pattern in <code>strings</code> and returns the
+ * searches Amatchpp::Levenshtein#pattern in <code>strings</code> and returns the
  * edit distance (the sum of character operations) as a Fixnum value, by greedy
  * trimming prefixes or postfixes of the match. <code>strings</code> has
  * to be either a String or an Array of Strings. The returned
@@ -462,7 +462,7 @@ static VALUE rb_Levenshtein_search(VALUE self, VALUE strings)
 }
 
 /* 
- * Document-class: Amatch::Sellers
+ * Document-class: Amatchpp::Sellers
  *
  * The Sellers edit distance is very similar to the Levenshtein edit distance.
  * The difference is, that you can also specify different weights for every
@@ -555,7 +555,7 @@ static VALUE rb_Sellers_reset_weights(VALUE self)
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::Sellers instance from <code>pattern</code>,
+ * Creates a new Amatchpp::Sellers instance from <code>pattern</code>,
  * with all weights initially set to 1.0.
  */
 static VALUE rb_Sellers_initialize(VALUE self, VALUE pattern)
@@ -573,7 +573,7 @@ DEF_CONSTRUCTOR(Sellers, Sellers)
  *
  * call-seq: pattern -> pattern string
  *
- * Returns the current pattern string of this Amatch::Sellers instance.
+ * Returns the current pattern string of this Amatchpp::Sellers instance.
  */
 
 /*
@@ -581,14 +581,14 @@ DEF_CONSTRUCTOR(Sellers, Sellers)
  *
  * call-seq: pattern=(pattern)
  * 
- * Sets the current pattern string of this Amatch::Sellers instance to
+ * Sets the current pattern string of this Amatchpp::Sellers instance to
  * <code>pattern</code>.
  */
 
 /*
  * call-seq: match(strings) -> results
  * 
- * Uses this Amatch::Sellers instance to match Sellers#pattern against
+ * Uses this Amatchpp::Sellers instance to match Sellers#pattern against
  * <code>strings</code>, while taking into account the given weights. It
  * returns the number of weighted character operations, the Sellers distance.
  * <code>strings</code> has to be either a String or an Array of Strings. The
@@ -604,7 +604,7 @@ static VALUE rb_Sellers_match(VALUE self, VALUE strings)
 /*
  * call-seq: similar(strings) -> results
  * 
- * Uses this Amatch::Sellers instance to match Amatch::Sellers#pattern
+ * Uses this Amatchpp::Sellers instance to match Amatchpp::Sellers#pattern
  * against <code>strings</code> (taking into account the given weights), and
  * compute a Sellers distance metric number between 0.0 for very unsimilar
  * strings and 1.0 for an exact match. <code>strings</code> has to be either a
@@ -634,7 +634,7 @@ static VALUE rb_Sellers_search(VALUE self, VALUE strings)
 }
 
 /* 
- * Document-class: Amatch::PairDistance
+ * Document-class: Amatchpp::PairDistance
  *
  * The pair distance between two strings is based on the number of adjacent
  * character pairs, that are contained in both strings. The similiarity
@@ -658,7 +658,7 @@ DEF_RB_FREE(PairDistance, PairDistance)
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::PairDistance instance from <code>pattern</code>.
+ * Creates a new Amatchpp::PairDistance instance from <code>pattern</code>.
  */
 static VALUE rb_PairDistance_initialize(VALUE self, VALUE pattern)
 {
@@ -672,7 +672,7 @@ DEF_CONSTRUCTOR(PairDistance, PairDistance)
 /*
  * call-seq: match(strings, regexp = /\s+/) -> results
  * 
- * Uses this Amatch::PairDistance instance to match  PairDistance#pattern against
+ * Uses this Amatchpp::PairDistance instance to match  PairDistance#pattern against
  * <code>strings</code>. It returns the pair distance measure, that is a
  * returned value of 1.0 is an exact match, partial matches are lower
  * values, while 0.0 means no match at all.
@@ -721,7 +721,7 @@ static VALUE rb_PairDistance_match(int argc, VALUE *argv, VALUE self)
 /*
  * call-seq: pair_distance_similar(strings) -> results
  *
- * If called on a String, this string is used as a Amatch::PairDistance#pattern
+ * If called on a String, this string is used as a Amatchpp::PairDistance#pattern
  * to match against <code>strings</code> using /\s+/ as the tokenizing regular
  * expression. It returns a pair distance metric number between 0.0 for very
  * unsimilar strings and 1.0 for an exact match. <code>strings</code> has to be
@@ -735,7 +735,7 @@ static VALUE rb_str_pair_distance_similar(VALUE self, VALUE strings)
 }
 
 /* 
- * Document-class: Amatch::Hamming
+ * Document-class: Amatchpp::Hamming
  *
  *  This class computes the Hamming distance between two strings.
  *
@@ -751,7 +751,7 @@ DEF_RB_FREE(Hamming, General)
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::Hamming instance from <code>pattern</code>.
+ * Creates a new Amatchpp::Hamming instance from <code>pattern</code>.
  */
 static VALUE rb_Hamming_initialize(VALUE self, VALUE pattern)
 {
@@ -765,7 +765,7 @@ DEF_CONSTRUCTOR(Hamming, General)
 /*
  * call-seq: match(strings) -> results
  * 
- * Uses this Amatch::Hamming instance to match Amatch::Hamming#pattern against
+ * Uses this Amatchpp::Hamming instance to match Amatchpp::Hamming#pattern against
  * <code>strings</code>, that is compute the hamming distance between
  * <code>pattern</code> and <code>strings</code>. <code>strings</code> has to
  * be either a String or an Array of Strings. The returned <code>results</code>
@@ -780,7 +780,7 @@ static VALUE rb_Hamming_match(VALUE self, VALUE strings)
 /*
  * call-seq: similar(strings) -> results
  *
- * Uses this Amatch::Hamming instance to match  Amatch::Hamming#pattern against
+ * Uses this Amatchpp::Hamming instance to match  Amatchpp::Hamming#pattern against
  * <code>strings</code>, and compute a Hamming distance metric number between
  * 0.0 for very unsimilar strings and 1.0 for an exact match.
  * <code>strings</code> has to be either a String or an Array of Strings. The
@@ -796,7 +796,7 @@ static VALUE rb_Hamming_similar(VALUE self, VALUE strings)
 /*
  * call-seq: hamming_similar(strings) -> results
  *
- * If called on a String, this string is used as a Amatch::Hamming#pattern to
+ * If called on a String, this string is used as a Amatchpp::Hamming#pattern to
  * match against <code>strings</code>. It returns a Hamming distance metric
  * number between 0.0 for very unsimilar strings and 1.0 for an exact match.
  * <code>strings</code>
@@ -811,7 +811,7 @@ static VALUE rb_str_hamming_similar(VALUE self, VALUE strings)
 
 
 /* 
- * Document-class: Amatch::LongestSubsequence
+ * Document-class: Amatchpp::LongestSubsequence
  *
  *  This class computes the length of the longest subsequence common to two
  *  strings. A subsequence doesn't have to be contiguous. The longer the common
@@ -827,7 +827,7 @@ DEF_RB_FREE(LongestSubsequence, General)
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::LongestSubsequence instance from <code>pattern</code>.
+ * Creates a new Amatchpp::LongestSubsequence instance from <code>pattern</code>.
  */
 static VALUE rb_LongestSubsequence_initialize(VALUE self, VALUE pattern)
 {
@@ -841,7 +841,7 @@ DEF_CONSTRUCTOR(LongestSubsequence, General)
 /*
  * call-seq: match(strings) -> results
  * 
- * Uses this Amatch::LongestSubsequence instance to match
+ * Uses this Amatchpp::LongestSubsequence instance to match
  * LongestSubsequence#pattern against <code>strings</code>, that is compute the
  * length of the longest common subsequence. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -856,8 +856,8 @@ static VALUE rb_LongestSubsequence_match(VALUE self, VALUE strings)
 /*
  * call-seq: similar(strings) -> results
  * 
- * Uses this Amatch::LongestSubsequence instance to match
- * Amatch::LongestSubsequence#pattern against <code>strings</code>, and compute
+ * Uses this Amatchpp::LongestSubsequence instance to match
+ * Amatchpp::LongestSubsequence#pattern against <code>strings</code>, and compute
  * a longest substring distance metric number between 0.0 for very unsimilar
  * strings and 1.0 for an exact match. <code>strings</code> has to be either a
  * String or an Array of Strings. The returned <code>results</code> are either
@@ -873,7 +873,7 @@ static VALUE rb_LongestSubsequence_similar(VALUE self, VALUE strings)
  * call-seq: longest_subsequence_similar(strings) -> results
  *
  * If called on a String, this string is used as a
- * Amatch::LongestSubsequence#pattern to match against <code>strings</code>. It
+ * Amatchpp::LongestSubsequence#pattern to match against <code>strings</code>. It
  * returns a longest subsequence distance metric number between 0.0 for very
  * unsimilar strings and 1.0 for an exact match. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -886,7 +886,7 @@ static VALUE rb_str_longest_subsequence_similar(VALUE self, VALUE strings)
 }
 
 /* 
- * Document-class: Amatch::LongestSubstring
+ * Document-class: Amatchpp::LongestSubstring
  *
  * The longest common substring is the longest substring, that is part of
  * two strings. A substring is contiguous, while a subsequence need not to
@@ -904,7 +904,7 @@ DEF_RB_FREE(LongestSubstring, General)
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::LongestSubstring instance from <code>pattern</code>.
+ * Creates a new Amatchpp::LongestSubstring instance from <code>pattern</code>.
  */
 static VALUE rb_LongestSubstring_initialize(VALUE self, VALUE pattern)
 {
@@ -918,7 +918,7 @@ DEF_CONSTRUCTOR(LongestSubstring, General)
 /*
  * call-seq: match(strings) -> results
  * 
- * Uses this Amatch::LongestSubstring instance to match
+ * Uses this Amatchpp::LongestSubstring instance to match
  * LongestSubstring#pattern against <code>strings</code>, that is compute the
  * length of the longest common substring. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -933,8 +933,8 @@ static VALUE rb_LongestSubstring_match(VALUE self, VALUE strings)
 /*
  * call-seq: similar(strings) -> results
  * 
- * Uses this Amatch::LongestSubstring instance to match
- * Amatch::LongestSubstring#pattern against <code>strings</code>, and compute a
+ * Uses this Amatchpp::LongestSubstring instance to match
+ * Amatchpp::LongestSubstring#pattern against <code>strings</code>, and compute a
  * longest substring distance metric number between 0.0 for very unsimilar
  * strings and 1.0 for an exact match. <code>strings</code> has to be either a
  * String or an Array of Strings. The returned <code>results</code> are either
@@ -951,7 +951,7 @@ static VALUE rb_LongestSubstring_similar(VALUE self, VALUE strings)
  * call-seq: longest_substring_similar(strings) -> results
  *
  * If called on a String, this string is used as a
- * Amatch::LongestSubstring#pattern to match against <code>strings</code>. It
+ * Amatchpp::LongestSubstring#pattern to match against <code>strings</code>. It
  * returns a longest substring distance metric number between 0.0 for very
  * unsimilar strings and 1.0 for an exact match. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -964,7 +964,7 @@ static VALUE rb_str_longest_substring_similar(VALUE self, VALUE strings)
 }
   
 /*
- * Document-class: Amatch::Jaro
+ * Document-class: Amatchpp::Jaro
  *
  * This class computes the Jaro metric for two strings.
  * The Jaro metric computes the similarity between 0 (no match)
@@ -994,7 +994,7 @@ DEF_RB_WRITER(Jaro, rb_Jaro_ignore_case_set, ignore_case,
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::Jaro instance from <code>pattern</code>.
+ * Creates a new Amatchpp::Jaro instance from <code>pattern</code>.
  */
 static VALUE rb_Jaro_initialize(VALUE self, VALUE pattern)
 {
@@ -1009,7 +1009,7 @@ DEF_CONSTRUCTOR(Jaro, Jaro)
 /*
  * call-seq: match(strings) -> results
  *
- * Uses this Amatch::Jaro instance to match
+ * Uses this Amatchpp::Jaro instance to match
  * Jaro#pattern against <code>strings</code>, that is compute the
  * jaro metric with the strings. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -1025,7 +1025,7 @@ static VALUE rb_Jaro_match(VALUE self, VALUE strings)
  * call-seq: jaro_similar(strings) -> results
  *
  * If called on a String, this string is used as a
- * Amatch::Jaro#pattern to match against <code>strings</code>. It
+ * Amatchpp::Jaro#pattern to match against <code>strings</code>. It
  * returns a Jaro metric number between 0.0 for very
  * unsimilar strings and 1.0 for an exact match. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -1038,7 +1038,7 @@ static VALUE rb_str_jaro_similar(VALUE self, VALUE strings)
 }
 
 /*
- * Document-class: Amatch::JaroWinkler
+ * Document-class: Amatchpp::JaroWinkler
  *
  * This class computes the Jaro-Winkler metric for two strings.
  * The Jaro-Winkler metric computes the similarity between 0 (no match)
@@ -1092,7 +1092,7 @@ DEF_RB_WRITER(JaroWinkler, rb_JaroWinkler_scaling_factor_set, scaling_factor,
 /*
  * call-seq: new(pattern)
  *
- * Creates a new Amatch::JaroWinkler instance from <code>pattern</code>.
+ * Creates a new Amatchpp::JaroWinkler instance from <code>pattern</code>.
  */
 static VALUE rb_JaroWinkler_initialize(VALUE self, VALUE pattern)
 {
@@ -1108,7 +1108,7 @@ DEF_CONSTRUCTOR(JaroWinkler, JaroWinkler)
 /*
  * call-seq: match(strings) -> results
  *
- * Uses this Amatch::Jaro instance to match
+ * Uses this Amatchpp::Jaro instance to match
  * Jaro#pattern against <code>strings</code>, that is compute the
  * jaro metric with the strings. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>
@@ -1124,7 +1124,7 @@ static VALUE rb_JaroWinkler_match(VALUE self, VALUE strings)
  * call-seq: jarowinkler_similar(strings) -> results
  *
  * If called on a String, this string is used as a
- * Amatch::JaroWinkler#pattern to match against <code>strings</code>. It
+ * Amatchpp::JaroWinkler#pattern to match against <code>strings</code>. It
  * returns a Jaro-Winkler metric number between 0.0 for very
  * unsimilar strings and 1.0 for an exact match. <code>strings</code> has to be
  * either a String or an Array of Strings. The returned <code>results</code>

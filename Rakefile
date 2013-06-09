@@ -7,6 +7,7 @@ begin
   require 'rake/clean'
   require 'rake/testtask'
   require 'rbconfig'
+  require "rdoc/task"
 
 # rescue LoadError
 end
@@ -42,7 +43,10 @@ NAME    = 'amatchpp'
 PKG_NAME    = 'amatchpp'
 PKG_VERSION = File.read('VERSION').chomp
 PKG_FILES   = FileList["**/*"].exclude(/^(pkg|coverage|doc|tmp)/)
-PKG_DOC_FILES = [ "ext/amatch.c" ].concat(Dir['lib/**/*.rb']) << 'README'
+
+PKG_DOC_FILES = []
+PKG_DOC_FILES.concat(Dir['lib/**/*.rb'])
+PKG_DOC_FILES << 'README'
 
 MAKE        = ENV['MAKE'] || %w[gmake make].find { |c| system(c, '-v') }
 
@@ -127,10 +131,21 @@ end
 # Documentation
 ############################################################
 
-desc "Build the documentation"
-task :doc do
-  sh "rdoc -m README -t '#{PKG_NAME} - Approximate Matching' #{PKG_DOC_FILES * ' '}"
+RDoc::Task.new(:doc) do |rd|
+  sh "rice_protodoc ext/amatchpp/*.cpp ext/amatchpp/*.hpp  > protodoc.rb"
+
+  rd.main = "README"
+  rd.title = "#{PKG_NAME} - Enhanced Approximate Matching"
+  rd.rdoc_files.include("README", "prior_work.rdoc", "lib/**/*.rb", "protodoc.rb")
+  rd.rdoc_dir = "doc"
 end
+
+
+
+##########################################################
+# Packaging
+############################################################
+
 
 
 if defined?(Gem) and defined?(Gem::PackageTask) and
@@ -149,13 +164,13 @@ EOF
 
       s.files = #{PKG_FILES.sort.inspect}
 
-      s.extensions << "ext/extconf.rb"
+      s.extensions << "ext/amatchpp/extconf.rb"
 
       s.require_paths << 'ext' << 'lib'
 
       s.bindir = "bin"
-      s.executables = ["agrep.rb"]
-      s.default_executable = "agrep.rb"
+      # s.executables = ["agrep.rb"]
+      # s.default_executable = "agrep.rb"
 
       s.has_rdoc = true
       s.extra_rdoc_files.concat #{PKG_DOC_FILES.sort.inspect}
@@ -163,8 +178,8 @@ EOF
         '--title' << "#{PKG_NAME} - Approximate Matching"
       s.test_files.concat Dir['tests/test_*.rb']
 
-      s.author = "Florian Frank"
-      s.email = "flori@ping.de"
+      s.author = "Larry Dennison"
+      s.email = "larry@alum.mit.edu"
       s.homepage = "http://amatch.rubyforge.org"
       s.rubyforge_project = '#{PKG_NAME}'
     end

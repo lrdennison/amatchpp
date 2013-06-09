@@ -31,6 +31,22 @@ Data_Type<Amatchpp::JaroWinkler> rb_cJaroWinkler;
   // rb_cPairDistance,
 
 
+/*
+ * Document-module: Amatchpp
+ *
+ * This module supplies the following classes:
+ * * General
+ * * DynProg
+ * * Sellers
+ * * Levenshtein
+ * * Hamming
+ * * LongestSubsequence
+ * * LongestSubstring
+ * * Jaro
+ * * JaroWinkler
+ */
+
+
 extern "C"
 void Init_amatchpp()
 {
@@ -46,6 +62,9 @@ void Init_amatchpp()
   RUBY_DECL_RW_ATTR( Amatchpp::DynProg, rb_cDynProg, double, substitution);
   RUBY_DECL_RW_ATTR( Amatchpp::DynProg, rb_cDynProg, double, deletion);
   RUBY_DECL_RW_ATTR( Amatchpp::DynProg, rb_cDynProg, double, insertion);
+  RUBY_DECL_RW_ATTR( Amatchpp::DynProg, rb_cDynProg, int, start_pos);
+  RUBY_DECL_RW_ATTR( Amatchpp::DynProg, rb_cDynProg, int, end_pos);
+  RUBY_DECL_RW_ATTR( Amatchpp::DynProg, rb_cDynProg, std::string, edit_cmd);
 
   rb_cDynProg.define_method("reset_weights", &Amatchpp::DynProg::reset_weights);
 

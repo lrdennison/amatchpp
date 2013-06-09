@@ -1,4 +1,4 @@
-#include <algorithm> 
+#include <algorithm>
 #include <iostream>
 #include "Levenshtein.hpp"
 
@@ -28,30 +28,10 @@ namespace Amatchpp
 
   void Levenshtein::compute()
   {
-    int i, j;
-    double weight;
-    
     reset_weights();
+    DynProg::compute();
 
-    for (i = 1, c = 0, p = 1; i <= a_len; i++) {				
-      c = i % 2;                      /* current row */                   
-      p = (i + 1) % 2;                /* previous row */                  
-      v[c][0] = i * deletion; /* first column */                  
-      for (j = 1; j <= b_len; j++) {                                      
-	/* Bellman's principle of optimality: */				
-	weight = v[p][j - 1] +						
-	  (a_ptr[i - 1] == b_ptr[j - 1] ? 0 : substitution);	
-	if (weight > v[p][j] + insertion) {			
-	  weight = v[p][j] + insertion;				
-	}									
-	if (weight > v[c][j - 1] + deletion) {			
-	  weight = v[c][j - 1] + deletion;			
-	}									
-	v[c][j] = weight;							
-      }                                                                   
-      p = c;                                                              
-      c = (c + 1) % 2;                                                    
-    }
+    return;
   }
 
 
@@ -64,7 +44,7 @@ namespace Amatchpp
 
     compute();
 
-    double result = v[p][b_len];
+    double result = v[c][b_len];
     teardown();
     return( result);
   }
@@ -86,9 +66,9 @@ namespace Amatchpp
       compute();
 
       if (b_len > a_len) {
-        result = 1.0 - v[p][b_len] / (b_len * max_weight());
+        result = 1.0 - v[c][b_len] / (b_len * max_weight());
       } else {
-        result = 1.0 - v[p][b_len] / (a_len * max_weight());
+        result = 1.0 - v[c][b_len] / (a_len * max_weight());
       }
 
     }
@@ -105,8 +85,8 @@ namespace Amatchpp
 
     double min = a_len;
     for (int i = 0; i <= b_len; i++) {
-      if (v[p][i] < min) {
-	min = v[p][i];
+      if (v[c][i] < min) {
+	min = v[c][i];
       }
     }
 
@@ -114,5 +94,5 @@ namespace Amatchpp
     return( min);
   }
 
-  
+
 }
